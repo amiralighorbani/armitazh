@@ -1,0 +1,20 @@
+.pushable {
+  background: gray;
+  border: none;
+  border-radius: 12px;
+  padding: 0;
+  cursor: pointer;
+}
+.front {
+  display: block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 1rem;
+  background: aliceblue;
+  color: black;
+  transform: translateY(-4px);
+}
+
+.pushable:focus:not(:focus-visible) {
+  outline: none;
+}
