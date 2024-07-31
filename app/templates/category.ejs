@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content />
+    <meta name="author" content />
+    <title>صفحه اصلی</title>
+    <link rel="icon" type="image/x-icon" href="/pic/setting.svg" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link href="/css/tvstyles.css" rel="stylesheet" />
+  </head>
+  <style>
+    @font-face {
+      font-family: "yekan";
+      src: url("../font/Yekan.ttf");
+    }
+
+    * {
+      font-family: "yekan";
+      letter-spacing: 0;
+    }
+
+    #helper {
+      background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.3) 0%,
+          rgba(0, 0, 0, 0.7) 75%,
+          #000 100%
+        ),
+        url("./../pic/aarmi.jpg");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: scroll;
+      background-size: cover;
+    }
+
+    #btnVideoList:hover {
+      transition: 1s ease all;
+      background-color: #0e1d34;
+      color: aliceblue;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 0px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+    }
+
+    input:checked + .slider {
+      background-color: #2196f3;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2196f3;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+
+    .selection-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    select {
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .hellper:hover {
+      transition: all 1s ease;
+      color: #2196f3;
+      background-color: aliceblue;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0, 0, 0);
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    /* Modal content */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+
+    .hellHelper {
+      border: none;
+      background: none;
+      color: #2196f3;
+      position: absolute;
+      left: 20px;
+      top: 22px;
+      font-size: large;
+    }
+
+    .manchester {
+      border: none;
+      background: #c81e1e;
+      color: aliceblue;
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+      height: 40px;
+    }
+
+    .manchesterC {
+      border: none;
+      background: #2196f3;
+      color: aliceblue;
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+      height: 40px;
+    }
+
+    .addNewCat {
+      border: none;
+      background-color: #2196f3;
+      color: aliceblue;
+      border-radius: 5px;
+      padding: 5px 5px;
+    }
+
+    #editNameButten,
+    #deletetNameButten:hover {
+      cursor: pointer;
+    }
+    .modall {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modall-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    .success-message {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background-color: #4caf50;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+      display: none;
+    }
+  </style>
+
+  <body>
+    <nav class="navbar navbar-expand-lg" style="background-color: #2b2e2f">
+      <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="#!" style="color: aliceblue"
+          >به پنل مدیریت خوش آمدید</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="/tv"
+                style="color: aliceblue"
+                >صفحه اصلی</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/settings" style="color: aliceblue"
+                >تنظیمات</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/tv/b8:27:eb:cd:6d:94 "
+                id="first"
+                style="color: aliceblue"
+                >تلویزیون</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/category"
+                id="first"
+                style="color: aliceblue"
+                >دسته بندی ها</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/video"
+                id="first"
+                style="color: aliceblue"
+                >ویدیو ها</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/view"
+                id="first"
+                style="color: aliceblue"
+                >آمار</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/api/logout" style="color: aliceblue"
+                >خروج</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section id="helper" class="py-5">
+      <div class="container px-4 px-lg-5 mt-5">
+        <div
+          class="row gx-2 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-2 justify-content-center"
+          id="main"
+        ></div>
+        <button class="addNewCat" id="addCatNew">افزودن دسته بندی جدید</button>
+      </div>
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+    </section>
+
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <button class="fa-solid fa-close hellHelper" id="closeModal"></button>
+        <p>نام مورد نظر خود را وارد کنید</p>
+        <input type="text" id="nameInput" value="" style="height: 40px" />
+        <button
+          id="submitName"
+          style="
+            margin: 10px 0px;
+            border: none;
+            background-color: #2196f3;
+            color: aliceblue;
+            height: 40px;
+          "
+        >
+          ثبت
+        </button>
+      </div>
+    </div>
+
+    <div id="myModale" class="modal">
+      <div class="modal-content">
+        <button
+          class="fa-solid fa-close hellHelper"
+          id="closeDeleteModal"
+        ></button>
+        <div style="text-align: center">
+          <span
+            class="fa-solid fa-trash"
+            style="color: gray; font-size: xxx-large"
+          ></span>
+          <h5 id="deleteModalContent"></h5>
+          <div class="row">
+            <div class="col">
+              <button class="manchester" id="submitDeleteModal">
+                بله حذف شود
+              </button>
+            </div>
+            <div class="col">
+              <button class="manchesterC" id="closeDeleteModal2">
+                خیر حذف انجام نشود
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="myModalw" class="modal">
+      <div class="modal-content">
+        <button
+          class="fa-solid fa-close hellHelper"
+          id="closeModalNew"
+        ></button>
+        <p>نام دسته بندی جدید رو وارد کنید</p>
+        <input type="text" id="nameInputNewCat" value="" style="height: 40px" />
+        <button
+          id="submitNameNewCat"
+          style="
+            margin: 10px 0px;
+            border: none;
+            background-color: #2196f3;
+            color: aliceblue;
+            height: 40px;
+          "
+        >
+          ثبت
+        </button>
+      </div>
+    </div>
+    <div id="loadingModal" class="modall">
+      <div class="modall-content">
+        <div class="loader"></div>
+      </div>
+    </div>
+
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">
+          Copyright &copy; Your Website 2023
+        </p>
+      </div>
+    </footer>
+    <div id="successMessage" class="success-message">با موفقیت انجام شد</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/tvscripts.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const main = document.querySelector("#main");
+      var socket = io();
+      socket.emit("getGroup");
+      socket.on("jsonFile", async (data) => {
+        const category = data["groups"];
+        const videos = data["videos"];
+        const players = data["player"];
+        function showTv(cate) {
+          category.forEach((cat) => {
+            let check = true;
+            if (cat.name == "بدون دسته بندی") {
+              check = false;
+            }
+            if (check) {
+              main.innerHTML += `
+                        <div class="col mb-5">  
+                            <div class="card h-100">
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <div class="col"><h6 class="fw-bolder">${cat.name}<div style="position:absolute;left:25px;top:28px;font-size:smaller"></div></h6></div>
+                                        <div class="row">
+                                            <div class="col"><butten data-name="${cat.name}" class="fa-solid fa-pen" id="editNameButten" style="color:#2196F3"></butten></div>
+                                            <div class="col"><butten data-name="${cat.name}" class="fa-solid fa-remove" id="deletetNameButten" style="color:red;font-size:x-large"></butten></div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                    <div class="text-center">
+                                        <ul id="listBox" data-name="${cat.name}" style="list-style: none;">
+
+                                        </ul>
+                                        <button id="sabt" data-name="${cat.name}" style="
+                                          border: none;
+                                          background: #2196F3;
+                                          color: aliceblue;
+                                          padding: 2px 30px;
+                                          border-radius: 5px;
+                                          ">ثبت</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        `;
+            }
+          });
+          document.querySelectorAll("#listBox").forEach((list) => {
+            data["videosDescriptions"].forEach((video) => {
+              let temp = "";
+              if (list.getAttribute("data-name") == "بدون دسته بندی") {
+                temp = "disabled";
+              }
+              const helloeee = list.getAttribute("data-name");
+              list.innerHTML += `
+                        <li data-name="${video.name}" id="helloo" draggable="true" style="position: relative;" class="m-2">
+                            <h5 style="color:black;position:relative;left:60px">
+                                <a title="برای نمایش ویدیو کلیک کنید " href="/api/video/${video.name}" target="_blank" style="color:inherit;text-decoration: none;">
+                                        ${video.title}
+                                </a>
+                            </h5>
+                            <label class="switch" style="position: absolute;top: -6px; left:-40px">
+                                <input ${temp} type="checkbox" data-name="${video.name}" data-cat="${helloeee}" id="onOffVideoButten">
+                                <span class="slider round"></span>
+                            </label>
+                        </li>
+                        <hr>
+                        `;
+            });
+          });
+          document.querySelectorAll("#onOffVideoButten").forEach((e) => {
+            const videoName = e.getAttribute("data-name");
+            const catName = e.getAttribute("data-cat");
+            category.forEach((cat) => {
+              if (cat.name == catName)
+                if (cat.videos.includes(videoName)) e.checked = true;
+            });
+          });
+          document.querySelectorAll("#onOffVideoButten").forEach((e) => {
+            e.addEventListener("click", (e) => {
+              const videoName = e.target.getAttribute("data-name");
+              const catName = e.target.getAttribute("data-cat");
+              const stats = e.target.checked;
+              console.log(stats, catName, videoName);
+              category.forEach((cat) => {
+                if (catName == cat.name) {
+                  if (stats) {
+                    cat.videos.push(videoName);
+                    players.forEach((player) => {
+                      if (player.group == catName) {
+                        if (!player.playlist.includes(videoName)) {
+                          player.playlist.push(videoName);
+                        }
+                      }
+                    });
+                  } else {
+                    let index = cat.videos.indexOf(videoName);
+                    if (index !== -1) {
+                      cat.videos.splice(index, 1);
+                    }
+                    players.forEach((player) => {
+                      if (player.group == catName) {
+                        let index = player.playlist.indexOf(videoName);
+                        if (index !== -1) {
+                          player.playlist.splice(videoName, 1);
+                        }
+                      }
+                    });
+                  }
+                }
+              });
+
+              data["groups"] = category;
+              data["player"] = players;
+            });
+          });
+        }
+        showTv(0);
+        let modal = document.getElementById("myModal");
+        const closeModal = document.getElementById("closeModal");
+        const nameInput = document.getElementById("nameInput");
+        nameInput.addEventListener("input", (e) => {
+          let inputValue = event.target.value;
+
+          // Regular expression to allow only English letters, numbers, and symbols
+          let pattern = /^[a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+
+          // Check if the input value matches the pattern
+          if (!pattern.test(inputValue)) {
+            // If Persian characters are detected, remove them from the input
+            alert("متن فارسی وارد نکنید قربان!");
+            event.target.value = inputValue.replace(
+              /[\u0600-\u06FF\u0750-\u077F\u0590-\u05FF\u08A0-\u08FF]/g,
+              ""
+            );
+          } else if (inputValue.includes(" ")) {
+            alert("اجازه وارد کردن اسپیس نداری قربان!");
+            event.target.value = inputValue.replace(/\s/g, "");
+          }
+        });
+        const submitName = document.getElementById("submitName");
+        modal.style.display = "none";
+        const editNameButten = document.querySelectorAll("#editNameButten");
+        editNameButten.forEach((butten) => {
+          butten.addEventListener("click", (e) => {
+            modal.style.display = "block";
+            nameInput.value = e.target.getAttribute("data-name");
+            submitName.setAttribute(
+              "data-name",
+              e.target.getAttribute("data-name")
+            );
+          });
+        });
+        submitName.addEventListener("click", (e) => {
+          let name = document.getElementById("nameInput").value;
+          let oldName = e.target.getAttribute("data-name");
+          if (name) {
+            data["groups"].forEach((g) => {
+              if (g.name == oldName) g.name = name;
+            });
+
+            data["player"].forEach((p) => {
+              if (p.group == oldName) p.group = name;
+            });
+            //hello
+
+            socket.emit("changeGroup", data);
+            socket.emit("createGroupVideoStream", name);
+            document.getElementById("loadingModal").style.display = "block";
+            socket.emit("offClient", "all");
+            socket.on("hello", (data) => {
+              //socket.emit("reload", "all");
+              socket.emit("onClient", "all");
+              location.reload();
+            });
+
+            //socket.emit("changeGroup", data);
+            //modal.style.display = "none";
+            //location.reload();
+          } else {
+            alert("دسته بندی خالی نمی تواند باشد");
+            modal.style.display = "none";
+          }
+        });
+        closeModal.addEventListener("click", (e) => {
+          modal.style.display = "none";
+        });
+        const deleteModal = document.querySelector("#myModale");
+        const deletetNameButten =
+          document.querySelectorAll("#deletetNameButten");
+        const deleteModalContent = document.querySelector(
+          "#deleteModalContent"
+        );
+        const closeDeleteModal = document.querySelector("#closeDeleteModal");
+        const closeDeleteModal2 = document.querySelector("#closeDeleteModal2");
+        const submitDeleteModal = document.querySelector("#submitDeleteModal");
+        submitDeleteModal.addEventListener("click", (e) => {
+          let catName = e.target.getAttribute("data-name");
+          if (catName) {
+            let index = data["groups"].findIndex((obj) => obj.name == catName);
+            if (index !== -1) {
+              data["groups"].splice(index, 1);
+            }
+            data["player"].forEach((player) => {
+              if (player.group == catName) player.group = "بدون دسته بندی";
+              let hello = player.groupPlaylist.findIndex(e => e == catName)
+              if(hello != -1){
+                player.groupPlaylist.splice(hello, 1);
+              }
+              console.log(player.groupPlaylist)
+            });
+          }
+          socket.emit("changeGroup", data);
+          modal.style.display = "none";
+          socket.emit("offClient" , "all")
+          socket.emit("onClient" , "all")
+          //socket.emit("reload", "all");
+          location.reload();
+        });
+        deletetNameButten.forEach((butten) => {
+          butten.addEventListener("click", (e) => {
+            let catName = e.target.getAttribute("data-name");
+            submitDeleteModal.setAttribute("data-name", catName);
+            deleteModal.style.display = "block";
+            deleteModalContent.textContent = `ایا از حذف دسته بندی ${catName} اطمینان دارید؟`;
+          });
+        });
+        closeDeleteModal.addEventListener("click", (e) => {
+          deleteModal.style.display = "none";
+        });
+        closeDeleteModal2.addEventListener("click", (e) => {
+          deleteModal.style.display = "none";
+        });
+        const myModalw = document.querySelector("#myModalw");
+        const closeModalNew = document.querySelector("#closeModalNew");
+        const addCatNew = document.querySelector("#addCatNew");
+        const nameInputNewCat = document.querySelector("#nameInputNewCat");
+        const submitNameNewCat = document.querySelector("#submitNameNewCat");
+        addCatNew.addEventListener("click", (e) => {
+          myModalw.style.display = "block";
+        });
+        closeModalNew.addEventListener("click", (e) => {
+          myModalw.style.display = "none";
+        });
+        submitNameNewCat.addEventListener("click", (e) => {
+          let newCat = nameInputNewCat.value;
+          data["groups"].push({
+            name: newCat,
+            videos: [],
+          });
+          socket.emit("changeGroup", data);
+          modal.style.display = "none";
+          location.reload();
+        });
+
+        const sabt = document.querySelectorAll("#sabt");
+        sabt.forEach((sab) => {
+          sab.addEventListener("click", (e) => {
+            const catNamese = e.target.getAttribute("data-name");
+            let vid = [];
+            document.querySelectorAll("#onOffVideoButten").forEach((input) => {
+              if (
+                input.checked &&
+                input.getAttribute("data-cat") == catNamese
+              ) {
+                vid.push(input.getAttribute("data-name"));
+              }
+            });
+            data["groups"].forEach((g) => {
+              if (g.name == catNamese) {
+                g.videos = vid;
+              }
+            });
+            console.log(vid);
+
+            socket.emit("changeGroup", data);
+            socket.emit("createGroupVideoStream", catNamese);
+            socket.emit("offClient", "all");
+            document.getElementById("loadingModal").style.display = "block";
+            socket.on("hello", (data) => {
+             // socket.emit("reload", "all");
+              socket.emit("onClient", "all");
+              document.getElementById("loadingModal").style.display = "none";
+              const successMessage = document.getElementById("successMessage");
+              successMessage.style.display = "block";
+              setTimeout(() => {
+                successMessage.style.display = "none";
+              }, 3000);
+              //location.reload();
+            });
+          });
+        });
+        document
+          .getElementById("nameInputNewCat")
+          .addEventListener("input", (event) => {
+            let inputValue = event.target.value;
+
+            // Regular expression to allow only English letters, numbers, and symbols
+            let pattern = /^[a-zA-Z0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+
+            // Check if the input value matches the pattern
+            if (!pattern.test(inputValue)) {
+              // If Persian characters are detected, remove them from the input
+              alert("متن فارسی وارد نکنید قربان!");
+              event.target.value = inputValue.replace(
+                /[\u0600-\u06FF\u0750-\u077F\u0590-\u05FF\u08A0-\u08FF]/g,
+                ""
+              );
+            } else if (inputValue.includes(" ")) {
+              alert("اجازه وارد کردن اسپیس نداری قربان!");
+              event.target.value = inputValue.replace(/\s/g, "");
+            }
+          });
+      });
+    </script>
+  </body>
+</html>

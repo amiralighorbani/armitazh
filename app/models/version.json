@@ -1,0 +1,188 @@
+{
+    "version": 89,
+    "Ver": 1,
+    "versionApp": 0.1,
+    "VideoList": [
+        "33.mp4",
+        "rasa3.mp4",
+        "d.mp4",
+        "hello wrld.mp4",
+        "SampleVideo_1280x720_5mb.mp4",
+        "armitaje.mp4",
+        "HejabTV2.1.mp4",
+        "PazireshAgahi.mp4"
+    ],
+    "Condition": "*",
+    "Player": [
+        "00-B0-D0-63-C2-26",
+        "00-B0-D0-63-C2-26",
+        "00-B0-D0-63-C2-26"
+    ],
+    "ONTime": "0010101010101010101010101011",
+    "onOffTimeSchedule": [
+        {
+            "day": "sun",
+            "onTime1": {
+                "hour": "06",
+                "minute": "00"
+            },
+            "offTime1": {
+                "hour": "12",
+                "minute": "00"
+            }
+        },
+        {
+            "day": "sun",
+            "onTime2": {
+                "hour": "13",
+                "minute": "00"
+            },
+            "offTime2": {
+                "hour": "20",
+                "minute": "00"
+            }
+        },
+        {
+            "day": "mon",
+            "onTime1": {
+                "hour": "06",
+                "minute": "00"
+            },
+            "offTime1": {
+                "hour": "12",
+                "minute": "00"
+            }
+        },
+        {
+            "day": "mon",
+            "onTime2": {
+                "hour": "12",
+                "minute": "01"
+            },
+            "offTime2": {
+                "hour": "22",
+                "minute": "00"
+            }
+        },
+        {
+            "day": "tue",
+            "onTime1": {
+                "hour": "08",
+                "minute": "15"
+            },
+            "offTime1": {
+                "hour": "09",
+                "minute": "00"
+            }
+        },
+        {
+            "day": "tue",
+            "onTime2": {
+                "hour": "12",
+                "minute": "01"
+            },
+            "offTime2": {
+                "hour": "20",
+                "minute": "00"
+            }
+        },
+        {
+            "day": "wed",
+            "onTime1": {
+                "hour": "06",
+                "minute": "00"
+            },
+            "offTime1": {
+                "hour": "12",
+                "minute": "00"
+            }
+        },
+        {
+            "day": "wed",
+            "onTime2": {
+                "hour": "13",
+                "minute": "00"
+            },
+            "offTime2": {
+                "hour": "20",
+                "minute": "00"
+            }
+        },
+        {
+            "day": "thu",
+            "onTime1": {
+                "hour": "06",
+                "minute": "00"
+            },
+            "offTime1": {
+                "hour": "12",
+                "minute": "00"
+            }
+        },
+        {
+            "day": "thu",
+            "onTime2": {
+                "hour": "13",
+                "minute": "00"
+            },
+            "offTime2": {
+                "hour": "20",
+                "minute": "00"
+            }
+        },
+        {
+            "day": "fri",
+            "onTime1": {
+                "hour": "06",
+                "minute": "00"
+            },
+            "offTime1": {
+                "hour": "12",
+                "minute": "00"
+            }
+        },
+        {
+            "day": "fri",
+            "onTime2": {
+                "hour": "13",
+                "minute": "00"
+            },
+            "offTime2": {
+                "hour": "20",
+                "minute": "00"
+            }
+        },
+        {
+            "day": "sat",
+            "onTime1": {
+                "hour": "06",
+                "minute": "00"
+            },
+            "offTime1": {
+                "hour": "12",
+                "minute": "00"
+            }
+        },
+        {
+            "day": "sat",
+            "onTime2": {
+                "hour": "12",
+                "minute": "00"
+            },
+            "offTime2": {
+                "hour": "20",
+                "minute": "00"
+            }
+        }
+    ],
+    "Holyday": "00000111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111100",
+    "needToUpp": false,
+    "updateDate": {
+        "year": "",
+        "month": "",
+        "day": "",
+        "hour": "",
+        "minute": "",
+        "setDate": false
+    }
+}

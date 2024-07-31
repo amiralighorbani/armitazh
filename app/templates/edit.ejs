@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= tv %></title>
+    <link rel="icon" type="image/x-icon" href="/pic/setting.svg" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link href="/css/tvstyles.css" rel="stylesheet" />
+    <link href="/css/main.css" rel="stylesheet" />
+  </head>
+  <style>
+    @font-face {
+      font-family: "yekan";
+      src: url("../font/Yekan.ttf");
+    }
+
+    * {
+      font-family: "yekan";
+      letter-spacing: 0;
+    }
+
+    #btnVideoList:hover {
+      transition: 1s ease all;
+      background-color: #0e1d34;
+      color: aliceblue;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+    }
+
+    input:checked + .slider {
+      background-color: #2196f3;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2196f3;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+
+    .selection-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    select {
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+
+    .hellper:hover {
+      transition: all 1s ease;
+      color: #2196f3;
+      background-color: aliceblue;
+    }
+    .panel {
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      padding: 10px;
+      cursor: pointer;
+    }
+    .panel-items {
+      display: none;
+      padding: 10px;
+    }
+       .modall {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .modall-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+  }
+
+  .loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .success-message {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        background-color: #4CAF50;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        display: none;
+    }
+  </style>
+
+  <body>
+    <nav class="navbar navbar-expand-lg" style="background-color: #0e1d34">
+      <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="#!" style="color: aliceblue"
+          >به پنل مدیریت خوش آمدید</a
+        >
+        <button
+          class="navbar-toggler mobile-nav-toggle"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+            <li class="nav-item">
+              <a class="nav-link" href="/tv" style="color: aliceblue"
+                >صفحه اصلی</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/settings" style="color: aliceblue"
+                >تنظیمات</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href=""
+                style="color: aliceblue"
+                >تلویزیون</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/category"
+                id="first"
+                style="color: aliceblue"
+                >دسته بندی</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/video"
+                id="first"
+                style="color: aliceblue"
+                >ویدیو ها</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="/view"
+                id="first"
+                style="color: aliceblue"
+                >آمار</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/api/logout" style="color: aliceblue"
+                >خروج</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="main">
+      <section id="hero" class="hero section maine">
+        <div class="container">
+          <div class="row gy-4 d-flex justify-content-between">
+            <div
+              class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center"
+            >
+              <button
+                id="upButton"
+                class="hellper"
+                style="
+                  border: none;
+                  padding: 2px;
+                  border-radius: 40px;
+                  width: 20%;
+                  background-color: #2196f3;
+                  color: aliceblue;
+                  transition: all 1s ease;
+                  position: relative;
+                  top: -10px;
+                "
+              >
+                تلوزیون بعدی
+              </button>
+              <h6 data-aos="fade-up" id="tvNames">
+                  <%= tv %>
+                <label class="switch" style="position: relative; top: -9px">
+                  <input type="checkbox" checked id="onOffButten" />
+                  <span class="slider round"></span>
+                </label>
+
+                <div
+                  class="panel"
+                  onclick=""
+                  id="category"
+                  style="color: black; text-align: center"
+                >
+                  نمایش دسته بندی های موجود برای این ویدیو
+                </div>
+                <div class="panel-items" style="background-color: #b4babf">
+                  <div class="row">
+                    <div class="col">
+                      <label id="categoryBar">
+                      <br />
+                    </div>
+                  </div>
+                </div>
+              </h6>
+              <p data-aos="fade-up" data-aos-delay="100" id="address"></p>
+
+              <div
+                action="#"
+                class="form-search d-flex align-items-stretch mb-3 row"
+                data-aos="fade-up"
+                data-aos-delay="200"
+                style="
+                  background-color: aliceblue;
+                  color: #0e1d34;
+                  border-radius: 5px;
+                  padding: 10px;
+                "
+              >
+                <div class="col">
+                  <a
+                    id="showTvVideoList"
+                    style="color: #2196f3; cursor: pointer"
+                    >ویدیو های این تلوزیون</a
+                  >
+                </div>
+                <div class="col">
+                  <a
+                    id="showCatVideoList"
+                    style="color: #0e1d34; cursor: pointer"
+                    >ویدیو های دسته بندی</a
+                  >
+                </div>
+                <div class="col">
+                  <a
+                    id="showMainVideoList"
+                    style="color: #0e1d34; cursor: pointer"
+                    >ویدیو های کلی</a
+                  >
+                </div>
+                <hr style="margin-top: 15px; border: solid black 3px" />
+                <ul
+                  id="unorderListVideo"
+                  style="list-style: none; width: 100%"
+                >
+                <button id="sabt" style="border: none;background-color: #2196f3;color: aliceblue;padding-top: 5px;padding-bottom: 5px;width: 100%;border-radius: 5px;position: relative;top: 90%;">ثبت</button>
+              </ul>
+                <ul
+                  id="catVideoList"
+                  style="display: none; list-style: none"
+                ></ul>
+                <ul
+                  id="mainVideoList"
+                  style="display: none; list-style: none"
+                ></ul>
+              </div>
+              
+
+              <div class="row gy-4" data-aos="fade-up" data-aos-delay="300">
+
+
+              
+                <!-- <h4 style="font-family: yekan">تعداد پخش ویدیو ها</h4>
+
+                <div class="col-lg-3 col-6">
+                  <div class="stats-item text-center w-100 h-100">
+                    <span
+                      data-purecounter-start="0"
+                      data-purecounter-end="521"
+                      data-purecounter-duration="0"
+                      class="purecounter"
+                      >0</span
+                    >
+                    <p>33</p>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-6">
+                  <div class="stats-item text-center w-100 h-100">
+                    <span
+                      data-purecounter-start="0"
+                      data-purecounter-end="1453"
+                      data-purecounter-duration="0"
+                      class="purecounter"
+                      >0</span
+                    >
+                    <p>rasa3</p>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                  <div class="stats-item text-center w-100 h-100">
+                    <span
+                      data-purecounter-start="0"
+                      data-purecounter-end="232"
+                      data-purecounter-duration="0"
+                      class="purecounter"
+                      >0</span
+                    >
+                    <p>big_buck_bunny_720p_1mb</p>
+                  </div>
+                </div> -->
+              </div>
+
+              
+              
+            </div>
+            
+
+             
+
+            <div
+              class="col-lg-5 order-1 order-lg-2 hero-img"
+              data-aos="zoom-out"
+            >
+              <div
+                id="screenShot"
+                style="
+                  background-color: aliceblue;
+                  color: #0e1d34;
+                  border-radius: 5px;
+                  padding: 10px;
+                "
+              >
+                <img
+                  src="http://localhost:3000/api/pic"
+                  id="mmadNabodi"
+                  style="width: 100%"
+                />
+                <button id="screenShoot" style="border: none;
+                  background-color: #2196f3;
+                  color: aliceblue;
+                  border-radius: 5px;
+                  margin-top: 12px;
+                  position: relative;
+                  left: -37%;;"
+                >گرفتن اسکرین شات</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col"></div>
+          <div class="col" style="text-align: center;">
+            <div class="row" style="position: relative;top:25px;text-align: center;background-color: aliceblue;margin-top: 10px;width:200%;left:180px;border-radius: 5px;">
+                  <h4 style="color: #081221;font-family:yekan;">لیست  پخش نهایی این تلوزیون</h4>
+                  
+                  <div class="col" style="text-align: center;margin-top: 5px;">
+                    <span style="color: green;">کلی</span>
+                    <p id="inAll" style="color:#081221"></p>
+                  </div>
+                  
+                  <div class="col" style="text-align: center;margin-top: 5px;">
+                    <span style="color: blue;">دسته بندی های این تلوزیون</span>
+                    <p id="inCategory" style="color:#081221"></p>
+                  </div>
+  
+                  
+                  <div class="col" style="text-align: center;margin-top: 5px;">
+                    <span style="color: red;">این تلوزیون</span>
+                    <p id="inTelevesion" style="color:#081221"></p>
+                  </div>
+            </div>
+          </div>
+          <div class="col"></div>
+
+        </div>
+
+      </section>
+    </main>
+    
+<div id="loadingModal" class="modall">
+        <div class="modall-content">
+          <div class="loader"></div>
+        </div>
+      </div>
+    <div id="successMessage" class="success-message" style="z-index: 9999;">با موفقیت انجام شد</div>
+
+    <footer class="py-5" style="background-color: #081221">
+      <div class="container">
+        <p class="m-0 text-center text-white">
+          Copyright &copy; Your Website 2023
+        </p>
+      </div>
+    </footer>
+    <p id="maine" style="display: none"><%= tv %></p>
+  </body>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const dat = document.getElementById("maine");
+    const tvName = dat.textContent;
+    const address = document.getElementById("address");
+    const tvNames = document.getElementById("tvNames");
+    const list = document.getElementById("unorderListVideo");
+    const onOff = document.getElementById("onOffButten");
+    const nextTv = document.getElementById("upButton");
+    const showCatVideoList = document.getElementById("showCatVideoList");
+    const showTvVideoList = document.getElementById("showTvVideoList");
+    const catVideoList = document.getElementById("catVideoList");
+    const unorderListVideo = document.getElementById("unorderListVideo");
+    const showMainVideoList = document.getElementById("showMainVideoList");
+    const mainVideoList = document.getElementById("mainVideoList");
+    const category = document.getElementById("category");
+    const categoryBar = document.getElementById("categoryBar");
+    const inTelevesion = document.getElementById("inTelevesion");
+    const inCategory = document.getElementById("inCategory");
+    const inAll = document.getElementById("inAll");
+    let draggedItem = null;
+    let temp = 0;
+    let sum = 0;
+    let comac = ""
+    const tvPic = document.getElementById("mmadNabodi");
+
+    var socket = io();
+    socket.emit("getGroup");
+    socket.on("jsonFile", async (data) => {
+      const tvs = data["player"];
+      const groups = data["groups"];
+      const videos = data["videos"];
+      let tvNames = [];
+      let i =  0
+      tvs.forEach((tv) => {
+        if (tv.name == dat.textContent){
+          tvPic.src = `http://localhost:3000/api/tv/pic/${tv.image}`;
+          comac = tvPic.src
+          if(tv.connection == false){
+            alert('ارتباط سرور با این تلوزیون قطع شده است')
+            window.history.back();
+          }
+        }
+        tvNames.push(tv.name);
+      });
+
+
+      nextTv.addEventListener("click", (e) => {
+        let count = tvNames.indexOf(tvName);
+        console.log(count);
+        if (count + 1 < tvs.length) {
+          const counter = count + 1;
+          window.location.href = `http://localhost:3000/tv/${tvNames[counter]}`;
+        }
+        if (count + 1 == tvs.length) {
+          const counter = 0;
+
+          window.location.href = `http://localhost:3000/tv/${tvNames[counter]}`;
+        }
+      });
+
+      tvs.forEach((tv) => {
+        if (tvName == tv.name) {
+          //WRITE ADDRESS
+          address.innerText = tv.address;
+
+          //ON OFF TV
+          if (tv.state == false) {
+            onOff.checked = false;
+          }
+          if (tv.state == true) {
+            onOff.checked = true;
+          }
+
+          //CHANGE ON OFF CHANGE
+          onOff.addEventListener("change", (e) => {
+            tv.state = onOff.checked;
+            data["player"] = tvs;
+            if (!onOff.checked) socket.emit("offClient", tv.name);
+            if (onOff.checked) socket.emit("onClient", tv.name);
+
+            socket.emit("changeGroup", data);
+            location.reload();
+          });
+
+          //VIDEO ON OFF CHANGE
+
+          data["videosDescriptions"].forEach((video) => {
+            let hello = "";
+            if (tv.playlist.includes(video.name)) {
+              hello = "checked";
+            }
+            list.innerHTML += `
+                    <li data-name="${video.name}" id="helloo" draggable="true" style="position: relative;top:-2rem" class="m-2">
+                        <h5 style="color:black;">
+                            <a title="برای نمایش ویدیو کلیک کنید " href="/api/video/${video.name}" target="_blank" style="color:inherit;text-decoration: none;">
+                                ${video.title}
+                            </a>
+                        </h5>
+                        <label class="switch" style="position: absolute;top: -6px; left:10px">
+                            <input type="checkbox" ${hello} data-name="${video.name}" id="onOffVideoButten">
+                            <span class="slider round"></span>
+                        </label>
+                        <hr>
+                    </li>
+                    `;
+          });
+          const allVideoButten = document.querySelectorAll("#onOffVideoButten");
+          allVideoButten.forEach((butten) => {
+            butten.addEventListener("click", (e) => {
+              const videoNames = e.target.getAttribute("data-name");
+              if (e.target.checked == true) {
+                tv["playlist"].push(videoNames);
+              }
+              if (e.target.checked == false) {
+                tv["playlist"] = tv["playlist"].filter(
+                  (vid) => vid !== videoNames
+                );
+              }
+              data["player"] = tvs;
+        
+            });
+          });
+        }
+      });
+
+      showCatVideoList.addEventListener("click", () => {
+        catVideoList.style.display = "block";
+        showCatVideoList.style.color = "#2196f3";
+        unorderListVideo.style.display = "none";
+        showTvVideoList.style.color = "#0e1d34";
+        mainVideoList.style.display = "none";
+        showMainVideoList.style.color = "#0e1d34";
+        let temp = [];
+        tvs.forEach((tv) => {
+          if (tv.name == tvName) {
+            temp = tv.groupPlaylist
+          }
+        });
+        console.log(temp)
+        let catVideos = [];
+        temp.forEach(catName =>{
+          groups.forEach((g) => {
+            if (g.name == catName) {
+              g.videos.forEach(v=>{
+                catVideos.push(v);
+              })
+            }
+          });
+        })
+        console.log(catVideos)
+        catVideoList.innerHTML = "";
+        data["videosDescriptions"].forEach((video) => { 
+          if (catVideos.includes(video.name)) {
+            catVideoList.innerHTML += `
+                    <li data-name="${video.name}" id="helloo" draggable="true" style="position: relative;" class="m-2">
+                        <h5 style="color:black;">
+                            <a title="برای نمایش ویدیو کلیک کنید " href="/api/video/${video.name}" target="_blank" style="color:inherit;text-decoration: none;">
+                                ${video.title}
+                            </a>
+                        </h5>
+                        <label class="switch" style="position: absolute;top: -6px; left:10px">
+                            <input type="checkbox" checked data-name="${video.name}" id="onOffVideoButten" disabled>
+                            <span class="slider round" style="cursor: not-allowed;"></span>
+                        </label>
+                    </li>
+                    <hr>
+            `;
+          } else {
+            catVideoList.innerHTML += `
+                    <li data-name="${video.name}" id="helloo" draggable="true" style="position: relative;" class="m-2">
+                        <h5 style="color:black;">
+                            <a title="برای نمایش ویدیو کلیک کنید " href="/api/video/${video.name}" target="_blank" style="color:inherit;text-decoration: none;">
+                                ${video.title}
+                            </a>
+                        </h5>
+                        <label class="switch" style="position: absolute;top: -6px; left:10px;">
+                            <input type="checkbox" data-name="${video.name}" id="onOffVideoButten" disabled>
+                            <span class="slider round" style="cursor: not-allowed;"></span>
+                        </label>
+                    </li>
+                    <hr>
+            `;
+          }
+        });
+      });
+
+      showTvVideoList.addEventListener("click", () => {
+        showCatVideoList.style.color = "#0e1d34";
+        showTvVideoList.style.color = "#2196f3";
+        unorderListVideo.style.display = "block";
+        catVideoList.style.display = "none";
+        mainVideoList.style.display = "none";
+        showMainVideoList.style.color = "#0e1d34";
+      });
+
+      showMainVideoList.addEventListener("click", () => {
+        showCatVideoList.style.color = "#0e1d34";
+        showTvVideoList.style.color = "#0e1d34";
+        unorderListVideo.style.display = "none";
+        catVideoList.style.display = "none";
+        mainVideoList.style.display = "block";
+        mainVideoList.innerHTML = "";
+        showMainVideoList.style.color = "#2196f3";
+        //showMainVideoList.appendChild(document.createElement("hr"))
+        
+        data["videosDescriptions"].forEach((video) => {
+          if (data["mainVideo"].includes(video.name)) {
+            mainVideoList.innerHTML += `
+                    <li data-name="${video.name}" id="helloo" draggable="true" style="position: relative;" class="m-2">
+                        <h5 style="color:black;">
+                            <a title="برای نمایش ویدیو کلیک کنید " href="/api/video/${video.name}" target="_blank" style="color:inherit;text-decoration: none;">
+                                ${video.title}
+                            </a>
+                        </h5>
+                        <label class="switch" style="position: absolute;top: -6px; left:10px;">
+                            <input type="checkbox" checked data-name="${video.name}"  id="onOffVideoButten" disabled>
+                            <span class="slider round" style="cursor: not-allowed;"></span>
+                        </label>
+                    </li>
+                    <hr>
+            `;
+          } else {
+            mainVideoList.innerHTML += `
+                    <li data-name="${video.name}" id="helloo" draggable="true" style="position: relative;" class="m-2">
+                        <h5 style="color:black;">
+                            <a title="برای نمایش ویدیو کلیک کنید " href="/api/video/${video.name}" target="_blank" style="color:inherit;text-decoration: none;">
+                                ${video.title}
+                            </a>
+                        </h5>
+                        <label class="switch" style="position: absolute;top: -6px; left:10px">
+                            <input type="checkbox" data-name="${video.name}"  id="onOffVideoButten" disabled>
+                            <span class="slider round" style="cursor: not-allowed;"></span>
+                        </label>
+                    </li>
+                    <hr>
+            `;
+          }
+        });
+      });
+
+      data["groups"].forEach((cat) => {
+        let categoryTv = []    
+        
+        data["player"].forEach(tv =>{
+                if (tv.name == tvName){
+                  categoryTv = tv.groupPlaylist
+                }
+            })
+        if (cat.name !== "بدون دسته بندی") {
+          let videoCate = []
+          cat.videos.forEach(videocat =>{
+            data["videosDescriptions"].forEach(videoDes =>{
+              if(videoDes.name == videocat){
+                videoCate.push(" " + videoDes.title + " ")
+              }
+            })
+
+          })
+
+          if(categoryTv.indexOf(cat.name) == -1){
+            categoryBar.innerHTML += `
+            <input type="checkbox" class="chedede" value="${cat.name}" /> ${cat.name}</label>
+            <p>${videoCate}</p>
+            <hr>
+            `;
+          }else{
+            categoryBar.innerHTML += `
+            <input type="checkbox" class="chedede" checked value="${cat.name}" /> ${cat.name}</label>
+            <p>${videoCate}</p>
+            <hr>
+            `;
+          }
+        }
+      });
+        
+
+        
+      let counter = 0; 
+      category.addEventListener("click", e=>{
+        var panelItems = document.querySelector(".panel-items");
+        if (panelItems.style.display === "none") {
+          category.textContent = "ثبت"
+          category.style.backgroundColor="#2196f3"
+          category.style.color="aliceblue"
+          panelItems.style.display = "block";
+        } else {
+          panelItems.style.display = "none";
+          var checkboxes = document.querySelectorAll('.panel-items input[type="checkbox"]:checked');
+            data["player"].forEach(tv =>{
+                if (tv.name == tvName){
+                  tv.groupPlaylist=[]
+                }
+              })
+            checkboxes.forEach(function (checkbox) {
+              data["player"].forEach(tv =>{
+                if (tv.name == tvName){
+                  tv.groupPlaylist.push(checkbox.value)
+                }
+              })
+              console.log(checkbox.value);
+            });
+            counter++;
+          }
+          if(counter == 2){
+            console.log(tvName)
+            socket.emit("offClient", tvName);
+            socket.emit("onClient", tvName);
+            //socket.emit("reload", tvName);
+            socket.emit("changeGroup" , data)    
+            location.reload();
+          }
+      });
+
+      let final = []
+      data["mainVideo"].forEach(vid=>{
+        final.push(vid)
+      })
+
+      let groupeVideo = []
+      data["player"].forEach(tv =>{
+        if(tv.name == tvName){
+          tv.groupPlaylist.forEach(cat=>{
+            data["groups"].forEach(category=>{
+              if(cat == category.name){
+                console.log(cat)
+                category.videos.forEach(vid=>{
+                  groupeVideo.push(vid)
+                })
+              }
+            })
+          })
+        }
+      })
+
+      let tvVideo = []
+      data["player"].forEach(tv=>{
+        if(tv.name == tvName){
+          tv.playlist.forEach(vid=>{
+            tvVideo.push(vid)
+          })
+        }
+      })
+
+      let finale = []
+      final.forEach(name=>{
+        data["videosDescriptions"].forEach(title=>{
+          if(name == title.name){
+            finale.push(title.title)
+            name = title.title
+          }
+        })
+      })
+      let groupeVideoe=[]
+      groupeVideo.forEach(name=>{
+        data["videosDescriptions"].forEach(title=>{
+          if(name == title.name){
+            groupeVideoe.push(title.title)
+            name = title.title
+          }
+        })
+      })
+      let tvVideoe=[]
+      tvVideo.forEach(name=>{
+        data["videosDescriptions"].forEach(title=>{
+          if(name == title.name){
+            tvVideoe.push(title.title)
+            name = title.title
+          }
+        })
+      })
+
+
+      tvVideoe.forEach(vid=>{
+        inTelevesion.textContent += vid + "\t" + "," + "\t"
+      })
+
+      groupeVideoe.forEach(vid=>{
+        inCategory.textContent += vid + "\t" + "," + "\t"
+      })
+
+      finale.forEach(vid=>{
+        inAll.textContent += vid + "\t" + "," + "\t"
+      })
+      document.getElementById("sabt").addEventListener("click",e=>{
+        const hello = e.target.parentNode.querySelectorAll("input:checked")
+        let vid = []
+        hello.forEach(h=>{
+          vid.push(h.getAttribute("data-name"))
+        })
+        data["player"].forEach(tv=>{
+          if(tv.name == tvName){
+            tv.playlist = vid
+          }
+        })
+        socket.emit("changeGroup", data);
+        socket.emit("createTvVideoStream", tvName);
+        socket.emit("offClient", tvName);
+        loadingModal.style.display="block";
+        socket.on("hello",data=>{
+          loadingModal.style.display="none";
+            socket.emit("onClient", tvName);
+            //socket.emit("reload", tvName);
+            const successMessage = document.getElementById('successMessage');
+            successMessage.style.display = 'block';
+            setTimeout(() => {
+                successMessage.style.backgroundColor = '#4CAF50';
+                successMessage.style.display = 'none';
+                successMessage.textContent = 'با موفقیت انجام شد';
+            }, 3000);
+            location.reload();
+          })
+        })
+        
+      })
+      
+      
+      
+      document.getElementById("screenShoot").addEventListener("click",e=>{
+        socket.emit("screen",tvName)
+        loadingModal.style.display="block";
+        //document.getElementById("mmadNabodi").src =""
+      });
+
+      socket.on("screenShoot" , data =>{
+        const regex = /\/screen\/[a-f0-9-]+\.jpg$/;
+        let result = data.match(regex)[0];
+        console.log(result)
+        loadingModal.style.display="none";
+        if(result == "/screen/0.jpg"){
+          document.getElementById("mmadNabodi").src = "/screen/2.jpg"
+        }else{
+          document.getElementById("mmadNabodi").src = result
+        }
+      })
+  </script>
+  <script src="/js/editscripts.js"></script>
+</html>

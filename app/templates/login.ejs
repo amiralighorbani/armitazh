@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+  <head>
+    <title>ورود به نرم افزار</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="icon" type="image/x-icon" href="/pic/favicon.svg" />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <link rel="stylesheet" href="/css/loginstyle.css" />
+  </head>
+  <style>
+    @font-face {
+      font-family: "yekan";
+      src: url("../font/Yekan.ttf");
+    }
+
+    * {
+      font-family: "yekan";
+      letter-spacing: 0;
+    }
+
+    #helper {
+      background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.3) 0%,
+          rgba(0, 0, 0, 0.7) 75%,
+          #000 100%
+        ),
+        url("./../pic/armitaj.jpg");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: scroll;
+      background-size: cover;
+    }
+  </style>
+
+  <body class="img js-fullheight" id="helper">
+    <nav class="navbar navbar-expand-lg" style="background-color: transparent">
+      <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="/" style="color: aliceblue">بازگشت</a>
+      </div>
+    </nav>
+
+    <section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6 text-center mb-5"></div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-md-6 col-lg-4">
+            <div class="login-wrap p-0">
+              <h3 class="mb-4 text-center" style="font-family: 'yekan'">
+                ورود به حساب
+              </h3>
+              <form action="/api/users" class="signin-form" method="post">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    name="username"
+                    class="form-control"
+                    placeholder="نام اکانت"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <input
+                    id="password-field"
+                    name="password"
+                    type="password"
+                    class="form-control"
+                    placeholder="رمز عبور"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <button
+                    type="submit"
+                    class="form-control submit px-3"
+                    style="background-color: #64a19d"
+                  >
+                    ورود
+                  </button>
+                </div>
+                <p style="color: aliceblue; position: relative; left: 160px">
+                  <%= err %>
+                </p>
+              </form>
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+              <hr />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="footer bg-black small text-center text-white-50">
+      <div class="container px-4 px-lg-5">
+        Copyright &copy; Your Website 2023
+      </div>
+    </footer>
+    <script src="/js/loginmain.js"></script>
+  </body>
+</html>
